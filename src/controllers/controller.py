@@ -1,15 +1,11 @@
 from ast import Delete
 from os import name
 from typing import Text, TextIO
-from flask import json, request, render_template,redirect,flash,jsonify
+from flask import json, request, render_template,redirect,jsonify
 from flask.views import MethodView
 from pymysql.cursors import DictCursor
 from werkzeug.exceptions import PreconditionFailed
-
-
-
 from src.db import mysql
-
 
 class indexController(MethodView):
     def get (self):
@@ -25,9 +21,6 @@ class indexController(MethodView):
     def post(self): 
 
         products = request.get_json() or {}
-    
-
-
         img_url = products.get('img_url', False)
         caracteristicas = products.get('caracteristicas', False)
         precios = products.get('precios', False)
@@ -46,6 +39,7 @@ class indexController(MethodView):
                 print ["error"]
         print(products)
         return jsonify (products)
+
 
 class DeleteController(MethodView):
     def delete(self,id):
@@ -71,7 +65,6 @@ class UpdateController(MethodView):
     
     def patch(self, id):
         products = request.get_json() or {}
-
         img_url = products.get('img_url',False)
         caracteristicas = products.get('caracteristicas',False)
         precios = products.get('precios',False)
@@ -122,9 +115,9 @@ class UserController(MethodView):
             try:
                 cur.execute("delete from customer where id =%s",(id,))
                 cur.connection.commit()
-                print("el producto se elimino correctamente",'success')
+                print(["el producto se elimino correctamente",'success'])
             except:
-                print("error")
+                print(["error"])
             return (id_delete)
 #update            
     def patch (self):
@@ -176,8 +169,8 @@ class TrolleyController(MethodView):
             try:
                 cur.execute("delete from carrito where id = %s",(id,))
                 cur.connection.commit()
-                print("el producto se elimino correctamente",'success')
+                print(["el producto se elimino correctamente",'success'])
             except:
                 print("error")
             return jsonify(id_delete)
-        
+      
